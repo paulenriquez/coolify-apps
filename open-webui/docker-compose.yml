@@ -1,0 +1,51 @@
+services:
+  open-webui:
+    image: ghcr.io/open-webui/open-webui:${WEBUI_DOCKER_TAG-main}
+    container_name: open-webui
+    volumes:
+      - open-webui:/app/backend/data
+    ports:
+      - ${OPEN_WEBUI_PORT-3000}:8080
+    environment:
+      - "WEBUI_SECRET_KEY="
+      - "OIDC_CLIENT_ID=${OIDC_CLIENT_ID}"
+      - "OIDC_CLIENT_SECRET=${OIDC_CLIENT_SECRET}"
+      - "OIDC_ISSUER_URL=${OIDC_ISSUER_URL}"
+      - "OIDC_AUTH_URL=${OIDC_AUTH_URL}"
+      - "OIDC_TOKEN_URL=${OIDC_TOKEN_URL}"
+      - "OIDC_USERINFO_URL=${OIDC_USERINFO_URL}"
+      - "OIDC_SCOPES=${OIDC_SCOPES-openid profile email}"
+      - "ENABLE_OAUTH_SIGNUP=true"
+      - "OAUTH_MERGE_ACCOUNTS_BY_EMAIL=true"
+      - "OPENAI_API_KEY="
+    restart: unless-stopped
+
+  backup:
+    image: offen/docker-volume-backup:latest
+    container_name: open-webui-backup
+    volumes:
+      - open-webui:/volume
+      - ./backups/open-webui:/backup
+    environment:
+      - "BACKUP_FILENAME=open-webui-backup-$(date +%Y%m%d%H%M%S).tar.gz"
+      - "BACKUP_KEEP_DAYS=${BACKUP_KEEP_DAYS-7}"
+      - "BACKUP_UID=0"
+      - "BACKUP_GID=0"
+      - "S3_ENDPOINT=${S3_ENDPOINT}"
+      - "S3_ACCESS_KEY_ID=${S3_ACCESS_KEY_ID}"
+      - "S3_SECRET_ACCESS_KEY=${S3_SECRET_ACCESS_KEY}"
+      - "S3_BUCKET=${S3_BUCKET}"
+      - "BACKUP_CRON_SCHEDULE=${BACKUP_CRON_SCHEDULE-0 0 * * *}"
+    command:
+      [
+        "sh",
+        "-c",
+        'echo "${BACKUP_CRON_SCHEDULE-0 0 * * *}" | crontab - && crond -f',
+      ]
+    depends_on:
+      - open-webui
+    restart: unless-stopped
+
+volumes:
+  open-webui: {}
+  open-webui-backup-data:
