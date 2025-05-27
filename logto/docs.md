@@ -2,17 +2,11 @@
 
 A comprehensive identity solution covering both the front and backend, complete with pre-built infrastructure and enterprise-grade solutions.
 
-##### 🌐 Official Website: https://logto.io
+##### 🌐 OFFICIAL WEBSITE: https://logto.io
 
 ## Customizations
 
-**The customized `docker-compose.yml` is based on:**
-
-|            |                                                                              |
-| ---------- | ---------------------------------------------------------------------------- |
-| _Basis_    | Coolify's One-Click Template for Logto                                       |
-| _URL_      | https://github.com/coollabsio/coolify/blob/v4.x/templates/compose/logto.yaml |
-| _As of..._ | 27-May-2025                                                                  |
+##### 📍 STARTING POINT: [Coolify's One-Click Template for Logto](https://github.com/coollabsio/coolify/blob/v4.x/templates/compose/logto.yaml) (_as of 27-May-2025_)
 
 ### Making it work with Coolify's Traefik Proxy:
 

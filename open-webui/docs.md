@@ -2,17 +2,11 @@
 
 A user-friendly, open-source web UI for LLMs.
 
-##### 🌐 Official Website: https://openwebui.com/
+##### 🌐 OFFICIAL WEBSITE: https://openwebui.com/
 
 ## Customizations
 
-**The customized `docker-compose.yml` is based on:**
-
-|            |                                                                        |
-| ---------- | ---------------------------------------------------------------------- |
-| _Basis_    | Docker Compose File from Open WebUI's GitHub repository                |
-| _URL_      | https://github.com/open-webui/open-webui/blob/main/docker-compose.yaml |
-| _As of..._ | 27-May-2025                                                            |
+##### 📍 STARTING POINT: [Docker Compose File from Open WebUI's GitHub Repo](https://github.com/coollabsio/coolify/blob/v4.x/templates/compose/logto.yaml) (_as of 27-May-2025_)
 
 ### No Ollama:
 
