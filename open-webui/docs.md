@@ -6,7 +6,7 @@ A user-friendly, open-source web UI for LLMs.
 
 ## Customizations
 
-##### 📍 STARTING POINT: [Docker Compose File from Open WebUI's GitHub Repo](https://github.com/coollabsio/coolify/blob/v4.x/templates/compose/logto.yaml) (_as of 27-May-2025_)
+##### 📍 STARTING POINT: [Docker Compose File from Open WebUI's GitHub Repo](https://github.com/open-webui/open-webui/blob/main/docker-compose.yaml) (_as of 27-May-2025_)
 
 ### No Ollama:
 
