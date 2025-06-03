@@ -21,7 +21,7 @@ extra_hosts:
   - "$ADMIN_ENDPOINT_FQDN:host-gateway"
 ```
 
-- **Do note that:** there are two new environment variables that you need to configure in Coolify: `ENDPOINT_FQDN` and `ADMIN_ENDPOINT_FQDN`. These should hold the same value as `LOGTO_ENDPOINT` and `LOGTO_ADMIN_ENDPOINT` — just **without** the protocol (the `https://` prefix)
+**Do note that:** there are two new environment variables that you need to configure in Coolify: `ENDPOINT_FQDN` and `ADMIN_ENDPOINT_FQDN`. These should hold the same value as `LOGTO_ENDPOINT` and `LOGTO_ADMIN_ENDPOINT` — just **without** the protocol (the `https://` prefix)
 
 ### Explicitly declared ports:
 
