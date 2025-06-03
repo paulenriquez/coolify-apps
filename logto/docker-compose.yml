@@ -11,10 +11,10 @@ services:
     environment:
       - TRUST_PROXY_HEADER=1
       - DB_URL=postgres://${SERVICE_USER_POSTGRES}:${SERVICE_PASSWORD_POSTGRES}@postgres:5432/${POSTGRES_DB:-logto}
-      - ENDPOINT:${ENDPOINT}
-      - ADMIN_ENDPOINT:${ADMIN_ENDPOINT}
-      - ENDPOINT_FQDN:${ENPOINT_FQDN}
-      - ADMIN_ENDPOINT_FQDN:${ADMIN_ENDPOINT_FQDN}
+      - ENDPOINT=${ENDPOINT}
+      - ADMIN_ENDPOINT=${ADMIN_ENDPOINT}
+      - ENDPOINT_FQDN=${ENPOINT_FQDN}
+      - ADMIN_ENDPOINT_FQDN=${ADMIN_ENDPOINT_FQDN}
     extra_hosts:
       - "${ENDPOINT_FQDN}:host-gateway"
       - "${ADMIN_ENDPOINT_FQDN}:host-gateway"
