@@ -14,8 +14,8 @@ services:
       - ENDPOINT_FQDN=$LOGTO_ENDPOINT_FQDN
       - ADMIN_ENDPOINT_FQDN=$LOGTO_ADMIN_ENDPOINT_FQDN
     extra_hosts:
-      - "${LOGTO_ENDPOINT_FQDN}:host-gateway"
-      - "${LOGTO_ADMIN_ENDPOINT_FQDN}:host-gateway"
+      - ${LOGTO_ENDPOINT_FQDN}:host-gateway
+      - ${LOGTO_ADMIN_ENDPOINT_FQDN}:host-gateway
     healthcheck:
       test: ["CMD-SHELL", "exit 0"]
       interval: 5s
