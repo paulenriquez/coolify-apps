@@ -9,17 +9,15 @@ services:
       - 3001:3001
       - 3002:3002
     environment:
-      - SERVICE_FQDN_LOGTO_3001
-      - SERVICE_FQDN_LOGTOADMIN_3002
       - TRUST_PROXY_HEADER=1
       - DB_URL=postgres://${SERVICE_USER_POSTGRES}:${SERVICE_PASSWORD_POSTGRES}@postgres:5432/${POSTGRES_DB:-logto}
-      - ENDPOINT=$LOGTO_ENDPOINT
-      - ADMIN_ENDPOINT=$LOGTO_ADMIN_ENDPOINT
-      - ENDPOINT_FQDN=$LOGTO_ENDPOINT_FQDN
-      - ADMIN_ENDPOINT_FQDN=$LOGTO_ADMIN_ENDPOINT_FQDN
+      - ENDPOINT:${ENDPOINT}
+      - ADMIN_ENDPOINT:${ADMIN_ENDPOINT}
+      - ENDPOINT_FQDN:${ENPOINT_FQDN}
+      - ADMIN_ENDPOINT_FQDN:${ADMIN_ENDPOINT_FQDN}
     extra_hosts:
-      - "${LOGTO_ENDPOINT_FQDN}:host-gateway"
-      - "${LOGTO_ADMIN_ENDPOINT_FQDN}:host-gateway"
+      - "${ENDPOINT_FQDN}:host-gateway"
+      - "${ADMIN_ENDPOINT_FQDN}:host-gateway"
     healthcheck:
       test: ["CMD-SHELL", "exit 0"]
       interval: 5s
