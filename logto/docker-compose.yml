@@ -5,8 +5,12 @@ services:
       postgres:
         condition: service_healthy
     entrypoint: ["sh", "-c", "npm run cli db seed -- --swe && npm start"]
+    ports:
+      - 3001:3001
+      - 3002:3002
     environment:
-      - SERVICE_FQDN_LOGTO
+      - SERVICE_FQDN_LOGTO_3001
+      - SERVICE_FQDN_LOGTOADMIN_3002
       - TRUST_PROXY_HEADER=1
       - DB_URL=postgres://${SERVICE_USER_POSTGRES}:${SERVICE_PASSWORD_POSTGRES}@postgres:5432/${POSTGRES_DB:-logto}
       - ENDPOINT=$LOGTO_ENDPOINT
@@ -14,8 +18,8 @@ services:
       - ENDPOINT_FQDN=$LOGTO_ENDPOINT_FQDN
       - ADMIN_ENDPOINT_FQDN=$LOGTO_ADMIN_ENDPOINT_FQDN
     extra_hosts:
-      - ${LOGTO_ENDPOINT_FQDN}:host-gateway
-      - ${LOGTO_ADMIN_ENDPOINT_FQDN}:host-gateway
+      - "${LOGTO_ENDPOINT_FQDN}:host-gateway"
+      - "${LOGTO_ADMIN_ENDPOINT_FQDN}:host-gateway"
     healthcheck:
       test: ["CMD-SHELL", "exit 0"]
       interval: 5s
