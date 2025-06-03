@@ -13,7 +13,7 @@ services:
       - DB_URL=postgres://${SERVICE_USER_POSTGRES}:${SERVICE_PASSWORD_POSTGRES}@postgres:5432/${POSTGRES_DB:-logto}
       - ENDPOINT=${ENDPOINT}
       - ADMIN_ENDPOINT=${ADMIN_ENDPOINT}
-      - ENDPOINT_FQDN=${ENPOINT_FQDN}
+      - ENDPOINT_FQDN=${ENDPOINT_FQDN}
       - ADMIN_ENDPOINT_FQDN=${ADMIN_ENDPOINT_FQDN}
     extra_hosts:
       - "${ENDPOINT_FQDN}:host-gateway"
