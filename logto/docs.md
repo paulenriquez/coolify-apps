@@ -17,8 +17,8 @@ A comprehensive identity solution covering both the front and backend, complete 
 ```yaml
 # Under services > logto
 extra_hosts:
-  - "$LOGTO_ENDPOINT_NO_PROTOCOL:host-gateway"
-  - "$LOGTO_ADMIN_ENDPOINT_NO_PROTOCOL:host-gateway"
+  - "$LOGTO_ENDPOINT_FQDN:host-gateway"
+  - "$LOGTO_ADMIN_ENDPOINT_FQDN:host-gateway"
 ```
 
-- **Do note that:** there are two new environment variables that you need to configure in Coolify: `LOGTO_ENDPOINT_NO_PROTOCOL` and `LOGTO_ADMIN_ENDPOINT_NO_PROTOCOL`. These should hold the same value as `LOGTO_ENDPOINT` and `LOGTO_ADMIN_ENDPOINT` — just **without** the protocol (the `https://` prefix)
+- **Do note that:** there are two new environment variables that you need to configure in Coolify: `LOGTO_ENDPOINT_FQDN` and `LOGTO_ADMIN_ENDPOINT_FQDN`. These should hold the same value as `LOGTO_ENDPOINT` and `LOGTO_ADMIN_ENDPOINT` — just **without** the protocol (the `https://` prefix)

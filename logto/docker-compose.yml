@@ -11,11 +11,11 @@ services:
       - DB_URL=postgres://${SERVICE_USER_POSTGRES}:${SERVICE_PASSWORD_POSTGRES}@postgres:5432/${POSTGRES_DB:-logto}
       - ENDPOINT=$LOGTO_ENDPOINT
       - ADMIN_ENDPOINT=$LOGTO_ADMIN_ENDPOINT
-      - ENDPOINT_NO_PROTOCOL=$LOGTO_ENDPOINT_NO_PROTOCOL
-      - ADMIN_ENDPOINT_NO_PROTOCOL=$LOGTO_ADMIN_ENDPOINT_NO_PROTOCOL
+      - ENDPOINT_FQDN=$LOGTO_ENDPOINT_FQDN
+      - ADMIN_ENDPOINT_FQDN=$LOGTO_ADMIN_ENDPOINT_FQDN
     extra_hosts:
-      - "${LOGTO_ENDPOINT_NO_PROTOCOL}:host-gateway"
-      - "${LOGTO_ADMIN_ENDPOINT_NO_PROTOCOL}:host-gateway"
+      - "${LOGTO_ENDPOINT_FQDN}:host-gateway"
+      - "${LOGTO_ADMIN_ENDPOINT_FQDN}:host-gateway"
     healthcheck:
       test: ["CMD-SHELL", "exit 0"]
       interval: 5s
