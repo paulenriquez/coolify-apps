@@ -5,9 +5,6 @@ services:
       postgres:
         condition: service_healthy
     entrypoint: ["sh", "-c", "npm run cli db seed -- --swe && npm start"]
-    ports:
-      - 3001:3001
-      - 3002:3002
     environment:
       - TRUST_PROXY_HEADER=1
       - DB_URL=postgres://${SERVICE_USER_POSTGRES}:${SERVICE_PASSWORD_POSTGRES}@postgres:5432/${POSTGRES_DB:-logto}
