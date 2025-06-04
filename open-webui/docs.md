@@ -23,3 +23,7 @@ A user-friendly, open-source web UI for LLMs.
 - The number of days to keep backups can be configured using the `BACKUP_KEEP_DAYS` environment variable (defaults to 7 days).
 - The backup runs daily at midnight (0 0 \* \* \*), but can be customized using the `BACKUP_CRON_SCHEDULE` environment variable.
 - For more details, refer to the [offen/docker-volume-backup documentation](https://offen.github.io/docker-volume-backup/).
+
+### Removed `ports` from the compose file:
+
+- Prevents Open WebUI from being accessible at `<YOUR_SERVER_IP>:<OPEN_WEBUI_PORT>`.

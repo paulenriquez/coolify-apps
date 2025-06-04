@@ -15,9 +15,8 @@ services:
       - ADMIN_ENDPOINT=${ADMIN_ENDPOINT}
       - ENDPOINT_FQDN=${ENDPOINT_FQDN}
       - ADMIN_ENDPOINT_FQDN=${ADMIN_ENDPOINT_FQDN}
-    extra_hosts:
-      - "$ENDPOINT_FQDN:host-gateway"
-      - "$ADMIN_ENDPOINT_FQDN:host-gateway"
+    volumes:
+      - ./coolify-set-hosts.js:/etc/logto/coolify-set-hosts.js
     healthcheck:
       test: ["CMD-SHELL", "exit 0"]
       interval: 5s

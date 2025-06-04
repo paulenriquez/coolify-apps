@@ -4,6 +4,8 @@ services:
     container_name: open-webui
     volumes:
       - open-webui:/app/backend/data
+    expose:
+      - "8080"
     environment:
       - WEBUI_SECRET_KEY=${SERVICE_PASSWORD_64_WEBUISECRETKEY}
       - OPENAI_API_KEY=${OPENAI_API_KEY}
