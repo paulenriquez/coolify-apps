@@ -14,7 +14,7 @@ This involves...
 - orchestrating additional containers/services
 - _etc., etc._
 
-Hence, this repository aims to take all the above customizations, and "document" it in replicable `docker-compose.yml` files — so the next time I need to make any of these deployments, I'm able to do it in a standardized and automated manner.
+Hence, this repository aims to take all the above customizations, and "document" it in replicable `docker-compose.yaml` files — so the next time I need to make any of these deployments, I'm able to do it in a standardized and automated manner.
 
 ## 📂 Structure
 
