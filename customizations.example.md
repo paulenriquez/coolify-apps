@@ -2,10 +2,18 @@
 
 {{ Description of the application }}
 
-##### 🌐 OFFICIAL WEBSITE: {{ URL to the application's official website }}
+- **Official Website:** {{ URL to the app's official website }}
 
-## Customizations
+- **Starting Point:** [Basis of the original Docker Compose file (e.g., Docker Compose File from the Application's Docs Website )](https://example.com/docker-compose.yml) (_{{ DD-MMM-YYYY Date from when the Docker Compose file was picked-up }}_)
 
-##### 📍 STARTING POINT: [Basis of the original Docker Compose file (e.g., Docker Compose File from the Application's Docs Website )](https://example.com/docker-compose.yml) (_{{ DD-MMM-YYYY Date from when the Docker Compose file was picked-up }}_)
+### Customization # 1
 
-{{ Explain the changes made to the original Docker Compose file, as well as the rationale behind it }}
+{{ Explain the change made to the "Starting Point" (original Docker Compose file), as well as the rationale behind it }}
+
+### Customization # 2
+
+{{ Explain the change made to the "Starting Point" (original Docker Compose file), as well as the rationale behind it }}
+
+### Customization # n
+
+{{ Explain the change made to the "Starting Point" (original Docker Compose file), as well as the rationale behind it }}
