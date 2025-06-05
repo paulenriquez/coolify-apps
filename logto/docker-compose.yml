@@ -9,8 +9,8 @@ services:
       - DB_URL=postgres://${SERVICE_USER_POSTGRES}:${SERVICE_PASSWORD_POSTGRES}@postgres:5432/${POSTGRES_DB:-logto}
       - ENDPOINT=${LOGTO_ENDPOINT}
       - ADMIN_ENDPOINT=${LOGTO_ADMIN_ENDPOINT}
-      - LOGTO_ENDPOINT_FQDN
-      - LOGTO_ADMIN_ENDPOINT_FQDN
+      - ${LOGTO_ENDPOINT_FQDN}
+      - ${LOGTO_ADMIN_ENDPOINT_FQDN}
     entrypoint:
       - sh
       - "-c"
