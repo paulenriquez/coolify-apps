@@ -4,19 +4,46 @@ services:
     depends_on:
       postgres:
         condition: service_healthy
-    entrypoint: ["sh", "-c", "npm run cli db seed -- --swe && npm start"]
     environment:
       - TRUST_PROXY_HEADER=1
       - DB_URL=postgres://${SERVICE_USER_POSTGRES}:${SERVICE_PASSWORD_POSTGRES}@postgres:5432/${POSTGRES_DB:-logto}
-      - ENDPOINT=${ENDPOINT}
-      - ADMIN_ENDPOINT=${ADMIN_ENDPOINT}
-      - ENDPOINT_FQDN=${ENDPOINT_FQDN}
-      - ADMIN_ENDPOINT_FQDN=${ADMIN_ENDPOINT_FQDN}
-    volumes:
-      - type: bind
-        target: /etc/logto/coolify-set-hosts.js
-        content: |
-          console.log("Hello")
+      - ENDPOINT=${LOGTO_ENDPOINT}
+      - ADMIN_ENDPOINT=${LOGTO_ADMIN_ENDPOINT}
+      - LOGTO_ENDPOINT_FQDN
+      - LOGTO_ADMIN_ENDPOINT_FQDN
+    entrypoint:
+      - sh
+      - "-c"
+      - |
+        # Ensure coolify-proxy is reachable.
+        echo "------------------------------------------------------------"
+        echo "Pinging coolify-proxy..."
+        until ping -c1 coolify-proxy &>/dev/null; do
+          echo "coolify-proxy is not reachable. Trying again in 5s..."
+          echo ""
+          sleep 5
+          echo "Pinging coolify-proxy..."
+        done
+        echo ""
+
+        # Extract coolify-proxy IP from ping command
+        COOLIFY_PROXY_IP=$(ping -c1 coolify-proxy | head -n1 | awk '{print $3}' | tr -d '():')
+        echo "coolify-proxy IP: $${COOLIFY_PROXY_IP}"
+
+        # Add details to /etc/hosts (same effect as the extra_hosts
+        # directive in the docker-compose file)
+        echo "Appending to /etc/hosts:"
+
+        echo "  $${COOLIFY_PROXY_IP} ${LOGTO_ENDPOINT_FQDN}"
+        echo "$${COOLIFY_PROXY_IP} ${LOGTO_ENDPOINT_FQDN}" >> /etc/hosts
+
+        echo "  $${COOLIFY_PROXY_IP} ${LOGTO_ADMIN_ENDPOINT_FQDN}"
+        echo "$${COOLIFY_PROXY_IP} ${LOGTO_ADMIN_ENDPOINT_FQDN}" >> /etc/hosts
+
+        echo "------------------------------------------------------------"
+
+        # Run the logto entrypoint command
+        npm run cli db seed -- --swe && npm start
     healthcheck:
       test: ["CMD-SHELL", "exit 0"]
       interval: 5s
