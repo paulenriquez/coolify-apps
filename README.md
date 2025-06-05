@@ -16,6 +16,16 @@ This involves...
 
 Hence, this repository aims to take all the above customizations, and "document" it in replicable `docker-compose.yaml` files — so the next time I need to make any of these deployments, I'm able to do it in a standardized and automated manner.
 
+## ⚙️ Process
+
+The process I follow for each application is...
+
+1. Find a **"Starting Point"** — a pre-made Docker Compose file, maybe from the application's official repository.
+
+2. Customize the "Starting Point" based on my use-case. This will become the `docker-compose.yaml` file you'll find in each application directory within this repository.
+
+3. Document the customizations I made in #2. This will be come the `DOCS.md` file you'll find in each application directory as well.
+
 ## 📂 Structure
 
 The repository is structured like so:
@@ -25,14 +35,14 @@ coolify-apps/
 ├── [[ App Directory ]]/
 │   ├── docker-compose.yaml
 │   └── DOCS.md
-├── customizations.example.md
+├── DOCS.example.md
 └── README.md
 ```
 
 Each **App Directory** contains exactly two files —
 
 - `docker-compose.yaml` - The Custom Docker Compose file of the application to be deployed to Coolify.
-- `DOCS.md` - Summarizes the customizations present in each application's Docker Compose file.
+- `DOCS.md` - Documents the customizations present in each application's Docker Compose file.
 
 The `DOCS.example.md` file is a template for how each App Directory's `DOCS.md` file is to be structured and formatted.
 
