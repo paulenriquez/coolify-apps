@@ -62,7 +62,7 @@ LOGTO_ADMIN_ENDPOINT_FQDN=logto-admin.example.com
 
 ### Use `postgres:17-alpine` instead of `postgres:14-alpine`
 
-Coolify's one-click compose file (**Starting Point**) uses Postgres 14, while Logto's uses 17. Might be better to just use the upgraded version.
+Coolify's one-click compose file (**Starting Point**) uses Postgres 14, while Logto's uses 17. Might be better to just use the more recent version.
 
 ### Other changes
 
