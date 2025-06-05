@@ -6,51 +6,64 @@ Logto is the modern, open-source auth infrastructure for SaaS and AI apps.
 
 - **Starting Point:** [Coolify's One-Click Template for Logto](https://github.com/coollabsio/coolify/blob/v4.x/templates/compose/logto.yaml) (_as of 27-May-2025_)
 
-### Making Logto work with Coolify's Proxy:
+### Preventing Admin UI "Unauthorized. Please check credentials and its scope" Error
 
-Using the one-click template results into this issue (after first user account creation): https://github.com/logto-io/logto/issues/6048
+Logto does not work out-of-the-box when deployed to Coolify. Although you'll be able to create the first account, you'll come to find that performing any action within the Admin UI will result in **"Unauthorized. Please check credentials and its scope"** error.
 
-Based on that GitHub issue discussion, this can be fixed by using the `extra_hosts` directive. The FQDNs of the `ENDPOINT` and `ADMIN_ENDPOINT` must be mapped to the proxy's IP address (`coolify-proxy` in this case).
+The error is discussed here: https://github.com/logto-io/logto/issues/6048.
 
-By using the `extra_hosts` directive, you would effectively have to hardcode Coolify Proxy's IP address (either as an env variable or through the compose file itself). The problem is — IP addresses aren't permanent. This can get reassigned once your Coolify's proxy (or the server) is restarted — which means you'll have to change something in your config again.
+Based on that GitHub link, the said error can be fixed by using the `extra_hosts` directive in the Docker Compose file. The FQDNs of `ENDPOINT` and `ADMIN_ENDPOINT` must be mapped to your proxy's IP address.
 
-This custom [docker-compose.yaml](./docker-compose.yaml) solves this by automating the IP discovery process. Instead of the `extra_hosts` directive, it uses an expanded `entrypoint` script which configures `/etc/hosts` before starting Logto:
+For a Coolify deployment, this would pertain to the IP address of `coolify-proxy` within your Logto container's Docker Network.
 
-```sh
-echo "------------------------------------------------------------"
+**However,** the implication is... you would have to do the following:
 
-# Ensure coolify-proxy is reachable.
-echo "Pinging coolify-proxy..."
-until ping -c1 coolify-proxy &>/dev/null; do
-  echo "coolify-proxy is not reachable. Trying again in 5s..."
-  echo ""
-  sleep 5
-  echo "Pinging coolify-proxy..."
-done
-echo ""
+1. Look for `coolify-proxy`'s IP address by performing a `docker network inspect` against the Logto container's network
+2. Adding the IP address to the Docker Compose file's `extra_hosts`
+3. Repeat # 1 in case the IP address changes (maybe due to a container/ docker/ server restart)
 
-# Extract coolify-proxy IP from ping command
-COOLIFY_PROXY_IP=$(ping -c1 coolify-proxy | head -n1 | awk '{print $3}' | tr -d '():')
-echo "coolify-proxy IP: $${COOLIFY_PROXY_IP}"
+Effectively, you would have to manually "hardcode" that IP address — which you'll then have to update everytime that IP changes. _Not so elegant!_
 
-# Add details to /etc/hosts (same effect as the extra_hosts
-# directive in the docker-compose file)
-echo "Appending to /etc/hosts:"
+This custom [docker-compose.yaml](./docker-compose.yaml) solves this by automating that process.
 
-echo "  $${COOLIFY_PROXY_IP} ${LOGTO_ENDPOINT_FQDN}"
-echo "$${COOLIFY_PROXY_IP} ${LOGTO_ENDPOINT_FQDN}" >> /etc/hosts
+Instead of using `extra_hosts`, it uses an expanded `entrypoint` script which does the following everytime the container is started...
 
-echo "  $${COOLIFY_PROXY_IP} ${LOGTO_ADMIN_ENDPOINT_FQDN}"
-echo "$${COOLIFY_PROXY_IP} ${LOGTO_ADMIN_ENDPOINT_FQDN}" >> /etc/hosts
+1. Ping `coolify-proxy` from inside the container, parse the output, and extract the IP address
+2. Using the extracted IP address — modifies the container's `/etc/hosts` file to map your FQDNs — thus effectively achieving the same effect that `extra_hosts` does.
 
-echo "------------------------------------------------------------"
+**The benefit?** the container can easily watch for the Coolify Proxy's IP address upon instantiation.
 
-# Run the logto entrypoint command
-npm run cli db seed -- --swe && npm start
+> [!WARNING]
+>
+> If in case the IP changes _while_ the Logto container is already running — simply restart the Logto container and it should be able to "discover" the new IP. While still manual, it is definitely a better solution than using `extra_hosts`.
+
+#### Required Environment Variables
+
+You must assign the FQDNs as environment variables through...
+
+- `LOGTO_ENDPOINT_FQDN`
+- `LOGTO_ADMIN_ENDPOINT_FQDN`
+
+These should hold the same value as `LOGTO_ENDPOINT` and `LOGTO_ADMIN_ENDPOINT` respectively... just **without** the protocol (the `https://` prefix)
+
+**Example...** if your endpoints are:
+
+```
+LOGTO_ENDPOINT=https://logto.example.com
+LOGTO_ADMIN_ENDPOINT=https://logto-admin.example.com
 ```
 
-> [!NOTE]
->
-> You must assign the FQDNs as environment variables through `LOGTO_ENDPOINT_FQDN` and `LOGTO_ADMIN_ENDPOINT_FQDN`. These should hold the same value as `LOGTO_ENDPOINT` and `LOGTO_ADMIN_ENDPOINT` respectively... just **without** the protocol (the `https://` prefix)
+Then your FQDNs will be...
 
-###
+```
+LOGTO_ENDPOINT_FQDN=logto.example.com
+LOGTO_ADMIN_ENDPOINT_FQDN=logto-admin.example.com
+```
+
+### Use `postgres:17-alpine` instead of `postgres:14-alpine`
+
+Coolify's one-click compose file (**Starting Point**) uses Postgres 14, while Logto's uses 17. Might be better to just use the upgraded version.
+
+### Other changes
+
+- Removed `SERVICE_FQDN_LOGTO` env var; it doesn't seem to be required.

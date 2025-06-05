@@ -52,7 +52,7 @@ services:
       retries: 10
 
   postgres:
-    image: postgres:14-alpine
+    image: postgres:17-alpine
     user: postgres
     environment:
       POSTGRES_USER: ${SERVICE_USER_POSTGRES}
