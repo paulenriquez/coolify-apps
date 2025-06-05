@@ -6,7 +6,7 @@ Logto is the modern, open-source auth infrastructure for SaaS and AI apps.
 
 - **Starting Point:** [Coolify's One-Click Template for Logto](https://github.com/coollabsio/coolify/blob/v4.x/templates/compose/logto.yaml) (_as of 27-May-2025_)
 
-### Preventing Admin UI "Unauthorized. Please check credentials and its scope" Error
+### Prevent Admin UI _"Unauthorized. Please check credentials and its scope"_ Error
 
 Logto does not work out-of-the-box when deployed to Coolify. Although you'll be able to create the first account, you'll come to find that performing any action within the Admin UI will result in **"Unauthorized. Please check credentials and its scope"** error.
 
