@@ -23,22 +23,22 @@ The repository is structured like so:
 ```
 coolify-apps/
 ├── [[ App Directory ]]/
-│   ├── customizations.md
-│   └── docker-compose.yaml
+│   ├── docker-compose.yaml
+│   └── DOCS.md
 ├── customizations.example.md
 └── README.md
 ```
 
 Each **App Directory** contains exactly two files —
 
-- `customizations.md` - Summarizes the customizations present in each application's Docker Compose file.
 - `docker-compose.yaml` - The Custom Docker Compose file of the application to be deployed to Coolify.
+- `DOCS.md` - Summarizes the customizations present in each application's Docker Compose file.
 
-The `customizations.example.md` file is a template for how each App Directory's `customizations.md` file is to be structured and formatted.
+The `DOCS.example.md` file is a template for how each App Directory's `DOCS.md` file is to be structured and formatted.
 
 ## 🚀 Applications
 
-| Application | Website                | Directory     |                  Custom Docker Compose                  |                   Customizations                    |
-| ----------- | ---------------------- | ------------- | :-----------------------------------------------------: | :-------------------------------------------------: |
-| Logto       | https://logto.io/      | `/logto`      |   [docker-compose.yaml](./logto/docker-compose.yaml)    |   [customizations.md](./logto/customizations.md)    |
-| Open WebUI  | https://openwebui.com/ | `/open-webui` | [docker-compose.yaml](./open-webui/docker-compose.yaml) | [customizations.md](./open-webui/customizations.md) |
+| Application | Website                | Directory     |                  Custom Docker Compose                  |         Customizations          |
+| ----------- | ---------------------- | ------------- | :-----------------------------------------------------: | :-----------------------------: |
+| Logto       | https://logto.io/      | `/logto`      |   [docker-compose.yaml](./logto/docker-compose.yaml)    |   [DOCS.md](./logto/DOCS.md)    |
+| Open WebUI  | https://openwebui.com/ | `/open-webui` | [docker-compose.yaml](./open-webui/docker-compose.yaml) | [DOCS.md](./open-webui/DOCS.md) |
