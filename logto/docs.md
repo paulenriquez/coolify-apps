@@ -12,7 +12,7 @@ Using the one-click template results into this issue (after first user account c
 
 Based on that GitHub issue discussion, this can be fixed by using the `extra_hosts` directive. The FQDNs of the `ENDPOINT` and `ADMIN_ENDPOINT` must be mapped to the proxy's IP address (`coolify-proxy` in this case).
 
-By using the `extra_hosts` directive, you would effectively have to hardcode Coolify Proxy's IP address (either as an env variable or through the compose file itself). The problem is — IP addresses aren't permanent. This can get reassigned once your Coolify's proxy (or the server) is restarted — which means you'll have to change something in your config.
+By using the `extra_hosts` directive, you would effectively have to hardcode Coolify Proxy's IP address (either as an env variable or through the compose file itself). The problem is — IP addresses aren't permanent. This can get reassigned once your Coolify's proxy (or the server) is restarted — which means you'll have to change something in your config again.
 
 This custom [docker-compose.yml](./docker-compose.yml) solves this by automating the IP discovery process. Instead of the `extra_hosts` directive, it uses an expanded `entrypoint` script which configures `/etc/hosts` before starting Logto:
 
