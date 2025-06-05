@@ -31,8 +31,8 @@ coolify-apps/
 
 Each **App Directory** contains exactly two files —
 
-- `docker-compose.yaml` - The Docker Compose file to be used in Coolify.
 - `customizations.md` - Summarizes the customizations present in each application's Docker Compose file.
+- `docker-compose.yaml` - The Custom Docker Compose file of the application to be deployed to Coolify.
 
 The `customizations.example.md` file is a template for how each App Directory's `customizations.md` file is to be structured and formatted.
 
