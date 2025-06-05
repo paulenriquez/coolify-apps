@@ -31,8 +31,7 @@ services:
         COOLIFY_PROXY_IP=$(ping -c1 coolify-proxy | head -n1 | awk '{print $3}' | tr -d '():')
         echo "coolify-proxy IP: $${COOLIFY_PROXY_IP}"
 
-        # Add details to /etc/hosts (same effect as the extra_hosts
-        # directive in the docker-compose file)
+        # Add details to /etc/hosts
         echo "Appending to /etc/hosts:"
 
         echo "  $${COOLIFY_PROXY_IP} ${LOGTO_ENDPOINT_FQDN}"
