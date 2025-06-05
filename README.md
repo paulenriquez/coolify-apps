@@ -23,8 +23,8 @@ The repository is structured like so:
 ```
 coolify-apps/
 ├── [[ App Directory ]]/
-│   ├── docker-compose.yaml
-│   └── customizations.md
+│   ├── customizations.md
+│   └── docker-compose.yaml
 ├── customizations.example.md
 └── README.md
 ```
