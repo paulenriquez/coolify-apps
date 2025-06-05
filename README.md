@@ -25,20 +25,20 @@ coolify-apps/
 ├── [[ App Directory ]]/
 │   ├── docker-compose.yaml
 │   └── docs.md
-├── docs.example.md
+├── customizations.example.md
 └── README.md
 ```
 
 Each **App Directory** contains exactly two files —
 
 - `docker-compose.yaml` - The Docker Compose file to be used in Coolify.
-- `docs.md` - Outlines the customizations made in the Docker Compose file.
+- `customizations.md` - Outlines the customizations made in the Docker Compose file.
 
-The `docs.example.md` file is a template for how each App Directory's `docs.md` file is to be structured and formatted.
+The `customizations.example.md` file is a template for how each App Directory's `customizations.md` file is to be structured and formatted.
 
 ## 🚀 Applications
 
-| Application | Website                | Directory     | Docker Compose                                        | Documentation                   |
-| ----------- | ---------------------- | ------------- | ----------------------------------------------------- | ------------------------------- |
-| Logto       | https://logto.io/      | `/logto`      | [docker-compose.yml](./logto/docker-compose.yml)      | [docs.md](./logto/docs.md)      |
-| Open WebUI  | https://openwebui.com/ | `/open-webui` | [docker-compose.yml](./open-webui/docker-compose.yml) | [docs.md](./open-webui/docs.md) |
+| Application | Website                | Directory     | Docker Compose                                          | Customizations                                      |
+| ----------- | ---------------------- | ------------- | ------------------------------------------------------- | --------------------------------------------------- |
+| Logto       | https://logto.io/      | `/logto`      | [docker-compose.yaml](./logto/docker-compose.yaml)      | [customizations.md](./logto/customizations.md)      |
+| Open WebUI  | https://openwebui.com/ | `/open-webui` | [docker-compose.yaml](./open-webui/docker-compose.yaml) | [customizations.md](./open-webui/customizations.md) |
