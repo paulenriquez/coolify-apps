@@ -26,16 +26,16 @@ Effectively, you would have to manually "hardcode" that IP address — which you
 
 This custom [docker-compose.yaml](./docker-compose.yaml) solves this by automating that process.
 
-Instead of using `extra_hosts`, it uses an expanded `entrypoint` script which does the following everytime the container is started...
+Instead of using `extra_hosts`, it uses an expanded `entrypoint` script which does the following everytime the container is started:
 
-1. Ping `coolify-proxy` from inside the container, parse the output, and extract the IP address
-2. Using the extracted IP address — modifies the container's `/etc/hosts` file to map your FQDNs — thus effectively achieving the same effect that `extra_hosts` does.
+1. Pings `coolify-proxy` from inside the container, parses the output, and extracts the IP address
+2. Modifies the container's `/etc/hosts` file to map your FQDNs (using the extracted IP address) — thus effectively achieving the same effect that `extra_hosts` does.
 
 **The benefit?** the container can easily watch for the Coolify Proxy's IP address upon instantiation.
 
-> [!WARNING]
+> [!NOTE]
 >
-> If in case the IP changes _while_ the Logto container is already running — simply restart the Logto container and it should be able to "discover" the new IP. While still manual, it is definitely a better solution than using `extra_hosts`.
+> If in case the IP of the Coolify Proxy changes _while_ the Logto container is already running (highly, highly unlikely!) — simply restart the Logto container and it should be able to automatically "discover" that new IP.
 
 #### Required Environment Variables
 
