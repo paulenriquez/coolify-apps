@@ -10,10 +10,10 @@
 
 {{ Explain the change made to the "Starting Point" and the rationale behind it }}
 
-### itle of customization # 2
+### Title of customization # 2
 
 {{ Explain the change made to the "Starting Point" and the rationale behind it }}
 
-### itle of customization # n
+### Title of customization # n
 
 {{ Explain the change made to the "Starting Point" and the rationale behind it }}
