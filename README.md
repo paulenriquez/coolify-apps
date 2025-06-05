@@ -23,7 +23,7 @@ The repository is structured like so:
 ```
 coolify-apps/
 ├── [[ App Directory ]]/
-│   ├── docker-compose.yml
+│   ├── docker-compose.yaml
 │   └── docs.md
 ├── docs.example.md
 └── README.md
@@ -31,7 +31,7 @@ coolify-apps/
 
 Each **App Directory** contains exactly two files —
 
-- `docker-compose.yml` - The Docker Compose file to be used in Coolify.
+- `docker-compose.yaml` - The Docker Compose file to be used in Coolify.
 - `docs.md` - Outlines the customizations made in the Docker Compose file.
 
 The `docs.example.md` file is a template for how each App Directory's `docs.md` file is to be structured and formatted.
