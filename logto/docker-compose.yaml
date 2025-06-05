@@ -15,8 +15,9 @@ services:
       - sh
       - "-c"
       - |
-        # Ensure coolify-proxy is reachable.
         echo "------------------------------------------------------------"
+
+        # Ensure coolify-proxy is reachable.
         echo "Pinging coolify-proxy..."
         until ping -c1 coolify-proxy &>/dev/null; do
           echo "coolify-proxy is not reachable. Trying again in 5s..."
