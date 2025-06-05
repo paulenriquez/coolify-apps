@@ -38,7 +38,7 @@ The `customizations.example.md` file is a template for how each App Directory's 
 
 ## 🚀 Applications
 
-| Application | Website                | Directory     | Docker Compose                                          | Customizations                                      |
+| Application | Website                | Directory     | Custom Docker Compose                                   | Customizations                                      |
 | ----------- | ---------------------- | ------------- | ------------------------------------------------------- | --------------------------------------------------- |
 | Logto       | https://logto.io/      | `/logto`      | [docker-compose.yaml](./logto/docker-compose.yaml)      | [customizations.md](./logto/customizations.md)      |
 | Open WebUI  | https://openwebui.com/ | `/open-webui` | [docker-compose.yaml](./open-webui/docker-compose.yaml) | [customizations.md](./open-webui/customizations.md) |
