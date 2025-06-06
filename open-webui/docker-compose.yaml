@@ -12,8 +12,7 @@ services:
       - OAUTH_CLIENT_SECRET=${OAUTH_CLIENT_SECRET}
       - OAUTH_SCOPES=${OAUTH_SCOPES-openid profile email}
       - OPENID_PROVIDER_URL=${OPENID_PROVIDER_URL}
-      - ENABLE_SIGNUP=false
-      - ENABLE_OAUTH_SIGNUP=false
+      - ENABLE_SIGNUP=${ENABLE_SIGNUP-false}
     restart: unless-stopped
     healthcheck:
       test:
