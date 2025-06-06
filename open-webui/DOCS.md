@@ -10,11 +10,23 @@ A user-friendly, open-source web UI for LLMs.
 
 This setup does not include Ollama, as Open WebUI will be used as a front-end to connect to external model APIs.
 
-### OIDC Authentication
+### Customized Authentication
 
-Added OpenID Connect (OIDC) environment variables for authentication. These variables (`OIDC_CLIENT_ID`, `OIDC_CLIENT_SECRET`, `OIDC_ISSUER_URL`, `OIDC_AUTH_URL`, `OIDC_TOKEN_URL`, `OIDC_USERINFO_URL`, `OIDC_SCOPES`) need to be configured in Coolify with your OIDC provider's details.
+**For OIDC** — included the ff. environment variables:
 
-### Database Backup
+1. `OAUTH_CLIENT_ID` - OIDC client ID
+2. `OAUTH_CLIENT_SECRET` - OIDC client secret
+3. `OPENID_PROVIDER_URL` - OIDC well known URL, for example https://accounts.google.com/.well-known/openid-configuration
+4. `OAUTH_SCOPES` - Scopes to request. Defaults to openid email profile
+
+Additionally, the following were also included:
+
+```yaml
+ENABLE_SIGNUP=false
+ENABLE_OAUTH_SIGNUP=false
+```
+
+### Added Docker Volume Backup
 
 Included `offen/docker-volume-backup` service to regularly backup the SQLite database used by Open WebUI. Configured to upload backups to an S3-compatible storage bucket. The following environment variables need to be set in Coolify: `S3_ENDPOINT`, `S3_ACCESS_KEY_ID`, `S3_SECRET_ACCESS_KEY`, and `S3_BUCKET`. The number of days to keep backups can be configured using the `BACKUP_KEEP_DAYS` environment variable (defaults to 7 days). The backup runs daily at midnight (0 0 \* \* \*), but can be customized using the `BACKUP_CRON_SCHEDULE` environment variable. For more details, refer to the [offen/docker-volume-backup documentation](https://offen.github.io/docker-volume-backup/).
 
