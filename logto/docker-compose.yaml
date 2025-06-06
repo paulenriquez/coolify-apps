@@ -1,6 +1,6 @@
 services:
   logto:
-    image: svhd/logto:${TAG-latest}
+    image: svhd/logto:1.28
     depends_on:
       postgres:
         condition: service_healthy
