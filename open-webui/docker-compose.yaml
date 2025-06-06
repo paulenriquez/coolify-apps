@@ -7,6 +7,7 @@ services:
     expose:
       - "8080"
     environment:
+      - WEBUI_URL=${WEBUI_URL}
       - WEBUI_SECRET_KEY=${SERVICE_PASSWORD_64_WEBUISECRETKEY}
       - ENABLE_SIGNUP=false
       - ENABLE_LOGIN_FORM=false
