@@ -14,13 +14,13 @@ services:
       - ADMIN_ENDPOINT=${LOGTO_ADMIN_ENDPOINT}
       - ENDPOINT_FQDN=${LOGTO_ENDPOINT_FQDN}
       - ADMIN_ENDPOINT_FQDN=${LOGTO_ADMIN_ENDPOINT_FQDN}
+      - ADMIN_DISABLE_LOCALHOST=${ADMIN_DISABLE_LOCALHOST-0}
     entrypoint:
       - sh
       - "-c"
       - |
         echo "------------------------------------------------------------"
 
-        # Ensure coolify-proxy is reachable.
         echo "Pinging coolify-proxy..."
         until ping -c1 coolify-proxy &>/dev/null; do
           echo "coolify-proxy is not reachable. Trying again in 5s..."
