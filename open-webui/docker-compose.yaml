@@ -7,7 +7,7 @@ services:
     expose:
       - "8080"
     environment:
-      - WEBUI_SECRET_KEY=${WEBUI_SECRET_KEY-SERVICE_PASSWORD_64_WEBUISECRETKEY}
+      - WEBUI_SECRET_KEY=${SERVICE_PASSWORD_64_WEBUISECRETKEY}
       - OAUTH_CLIENT_ID=${OAUTH_CLIENT_ID}
       - OAUTH_CLIENT_SECRET=${OAUTH_CLIENT_SECRET}
       - OAUTH_SCOPES=${OAUTH_SCOPES-openid profile email}
@@ -32,7 +32,7 @@ services:
       - open-webui:/volume
       - ./backups/open-webui:/backup
     environment:
-      - "BACKUP_FILENAME=${BACKUP_FILENAME-'open-webui-backup-$(date +%Y%m%d%H%M%S).tar.gz'}"
+      - "BACKUP_FILENAME=${BACKUP_FILENAME-open-webui-backup-$(date +%Y%m%d%H%M%S).tar.gz}"
       - "BACKUP_KEEP_DAYS=${BACKUP_KEEP_DAYS-7}"
       - "BACKUP_UID=0"
       - "BACKUP_GID=0"
