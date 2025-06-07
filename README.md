@@ -48,8 +48,8 @@ The `DOCS.example.md` file is a template for how each App Directory's `DOCS.md` 
 
 ## 🚀 Applications
 
-| Application               | Directory              |                      Custom Docker Compose                       |              Customizations              |
-| ------------------------- | ---------------------- | :--------------------------------------------------------------: | :--------------------------------------: |
-| MorbZ/docker-web-redirect | `/docker-web-redirect` | [docker-compose.yaml](./docker-web-redirect/docker-compose.yaml) | [DOCS.md](./docker-web-redirect/DOCS.md) |
-| Logto                     | `/logto`               |        [docker-compose.yaml](./logto/docker-compose.yaml)        |        [DOCS.md](./logto/DOCS.md)        |
-| Open WebUI                | `/open-webui`          |     [docker-compose.yaml](./open-webui/docker-compose.yaml)      |     [DOCS.md](./open-webui/DOCS.md)      |
+| Application               | Directory                    |                      Custom Docker Compose                       |              Customizations              |
+| ------------------------- | ---------------------------- | :--------------------------------------------------------------: | :--------------------------------------: |
+| Logto                     | `/logto`                     |        [docker-compose.yaml](./logto/docker-compose.yaml)        |        [DOCS.md](./logto/DOCS.md)        |
+| MorbZ/docker-web-redirect | `/morbz-docker-web-redirect` | [docker-compose.yaml](./docker-web-redirect/docker-compose.yaml) | [DOCS.md](./docker-web-redirect/DOCS.md) |
+| Open WebUI                | `/open-webui`                |     [docker-compose.yaml](./open-webui/docker-compose.yaml)      |     [DOCS.md](./open-webui/DOCS.md)      |
