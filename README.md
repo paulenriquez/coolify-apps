@@ -24,7 +24,7 @@ The process I follow for each application is...
 
 2. Customize the "Starting Point" based on my use-case. This will become the `docker-compose.yaml` file you'll find in each application directory within this repository.
 
-3. Document the customizations I made in #2. This will be come the `DOCS.md` file you'll find in each application directory as well.
+3. Document the customizations I made in #2. This will become the `DOCS.md` file you'll find in each application directory as well.
 
 ## 📂 Structure
 
