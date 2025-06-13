@@ -1,6 +1,8 @@
 services:
   open-webui:
     image: ghcr.io/open-webui/open-webui:${WEBUI_DOCKER_TAG-main}
+    depends_on:
+      - postgres
     container_name: open-webui
     volumes:
       - open-webui:/app/backend/data
@@ -9,13 +11,28 @@ services:
     environment:
       - WEBUI_URL=${WEBUI_URL}
       - WEBUI_SECRET_KEY=${SERVICE_PASSWORD_64_WEBUISECRETKEY}
-      - ENABLE_SIGNUP=false
-      - ENABLE_LOGIN_FORM=false
-      - ENABLE_OAUTH_SIGNUP=true
+
+      # Auth (via OIDC)
+      - ENABLE_SIGNUP=False
+      - ENABLE_LOGIN_FORM=False
+      - ENABLE_OAUTH_SIGNUP=True
       - OAUTH_CLIENT_ID=${OAUTH_CLIENT_ID}
       - OAUTH_CLIENT_SECRET=${OAUTH_CLIENT_SECRET}
       - OAUTH_SCOPES=${OAUTH_SCOPES-openid profile email}
       - OPENID_PROVIDER_URL=${OPENID_PROVIDER_URL}
+
+      # Database
+      - DATABASE_URL=postgres://${SERVICE_USER_POSTGRES}:${SERVICE_PASSWORD_POSTGRES}@postgres:5432/${POSTGRES_DB:-webui}
+
+      # S3 Storage
+      - STORAGE_PROVIDER=s3
+      - S3_BUCKET_NAME=${S3_BUCKET_NAME}
+      - S3_ENDPOINT_URL=${S3_ENDPOINT_URL}
+      - S3_SECRET_ACCESS_KEY=${S3_SECRET_ACCESS_KEY}
+
+      # Persistent Config (see https://docs.openwebui.com/getting-started/env-configuration/#important-note-on-persistentconfig-environment-variables)
+      - ENABLE_PERSISTENT_CONFIG=false
+      - ENABLE_OLLAMA_API=False
     restart: unless-stopped
     healthcheck:
       test:
@@ -29,6 +46,29 @@ services:
     labels:
       - docker-volume-backup.stop-during-backup=true
 
+  postgres:
+    image: postgres:17-alpine
+    user: postgres
+    environment:
+      POSTGRES_USER: ${SERVICE_USER_POSTGRES}
+      POSTGRES_PASSWORD: ${SERVICE_PASSWORD_POSTGRES}
+      POSTGRES_DB: ${POSTGRES_DB:-webui}
+    volumes:
+      - open-webui-postgres:/var/lib/postgresql/data
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "pg_isready",
+          "-U",
+          "$SERVICE_USER_POSTGRES",
+          "-d",
+          "$POSTGRES_DB",
+        ]
+      interval: 5s
+      timeout: 20s
+      retries: 10
+
   backup:
     image: offen/docker-volume-backup:latest
     container_name: open-webui-backup
@@ -36,7 +76,6 @@ services:
       - open-webui:/backup/open-webui:ro
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - /etc/timezone:/etc/timezone:ro
-      - /etc/localtime:/etc/localtime:ro
     environment:
       - BACKUP_CRON_EXPRESSION=${BACKUP_CRON_EXPRESSION-@daily}
       - BACKUP_FILENAME=${BACKUP_FILENAME-open-webui-backup-$(date +%Y%m%d%H%M%S).tar.gz}

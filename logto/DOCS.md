@@ -63,7 +63,3 @@ LOGTO_ADMIN_ENDPOINT_FQDN=logto-admin.example.com
 ### Use `postgres:17-alpine` instead of `postgres:14-alpine`
 
 Coolify's one-click compose file (**Starting Point**) uses Postgres 14, while Logto's uses 17. Might be better to just use the more recent version.
-
-### Other changes
-
-- Removed `SERVICE_FQDN_LOGTO` env var; it doesn't seem to be required.
