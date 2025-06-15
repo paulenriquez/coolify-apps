@@ -19,7 +19,7 @@ For a Coolify deployment, this would pertain to the IP address of `coolify-proxy
 **However,** the implication is... you would have to do the following:
 
 1. Look for `coolify-proxy`'s IP address by performing a `docker network inspect` against the Logto container's network
-2. Adding the IP address to the Docker Compose file's `extra_hosts`
+2. Add the IP address to the Docker Compose file's `extra_hosts`
 3. Repeat # 1 in case the IP address changes (maybe due to a container/ docker/ server restart)
 
 Effectively, you would have to manually "hardcode" that IP address — which you'll then have to update everytime that IP changes. _Not so elegant!_
@@ -36,29 +36,6 @@ Instead of using `extra_hosts`, it uses an expanded `entrypoint` script which do
 > [!NOTE]
 >
 > If in case the IP of the Coolify Proxy changes _while_ the Logto container is already running (highly, highly unlikely!) — simply restart the Logto container and it should be able to automatically "discover" that new IP.
-
-#### Required Environment Variables
-
-You must assign the FQDNs as environment variables through...
-
-- `LOGTO_ENDPOINT_FQDN`
-- `LOGTO_ADMIN_ENDPOINT_FQDN`
-
-These should hold the same value as `LOGTO_ENDPOINT` and `LOGTO_ADMIN_ENDPOINT` respectively... just **without** the protocol (the `https://` prefix)
-
-**Example...** if your endpoints are:
-
-```
-LOGTO_ENDPOINT=https://logto.example.com
-LOGTO_ADMIN_ENDPOINT=https://logto-admin.example.com
-```
-
-Then your FQDNs will be...
-
-```
-LOGTO_ENDPOINT_FQDN=logto.example.com
-LOGTO_ADMIN_ENDPOINT_FQDN=logto-admin.example.com
-```
 
 ### Use `postgres:17-alpine` instead of `postgres:14-alpine`
 

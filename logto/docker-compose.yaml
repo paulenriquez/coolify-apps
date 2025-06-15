@@ -35,14 +35,24 @@ services:
         COOLIFY_PROXY_IP=$(ping -c1 coolify-proxy | head -n1 | awk '{print $3}' | tr -d '():')
         echo "coolify-proxy IP: $${COOLIFY_PROXY_IP}"
 
+        # Remove protocol prefix ('http://' or 'https://')
+        LOGTO_ENDPOINT="${LOGTO_ENDPOINT}"
+        LOGTO_ADMIN_ENDPOINT="${LOGTO_ADMIN_ENDPOINT}"
+
+        ENDPOINT_NOPROTOCOL="$${LOGTO_ENDPOINT#http://}"
+        ENDPOINT_NOPROTOCOL="$${LOGTO_ENDPOINT#https://}"
+
+        ADMIN_ENDPOINT_NOPROTOCOL="$${LOGTO_ADMIN_ENDPOINT#http://}"
+        ADMIN_ENDPOINT_NOPROTOCOL="$${LOGTO_ADMIN_ENDPOINT#https://}"
+
         # Add details to /etc/hosts
         echo "Appending to /etc/hosts:"
 
-        echo "  $${COOLIFY_PROXY_IP} ${LOGTO_ENDPOINT_FQDN}"
-        echo "$${COOLIFY_PROXY_IP} ${LOGTO_ENDPOINT_FQDN}" >> /etc/hosts
+        echo "  $${COOLIFY_PROXY_IP} $${ENDPOINT_NOPROTOCOL}"
+        echo "$${COOLIFY_PROXY_IP} $${ENDPOINT_NOPROTOCOL}" >> /etc/hosts
 
-        echo "  $${COOLIFY_PROXY_IP} ${LOGTO_ADMIN_ENDPOINT_FQDN}"
-        echo "$${COOLIFY_PROXY_IP} ${LOGTO_ADMIN_ENDPOINT_FQDN}" >> /etc/hosts
+        echo "  $${COOLIFY_PROXY_IP} $${ADMIN_ENDPOINT_NOPROTOCOL}"
+        echo "$${COOLIFY_PROXY_IP} $${ADMIN_ENDPOINT_NOPROTOCOL}" >> /etc/hosts
 
         echo "------------------------------------------------------------"
 
