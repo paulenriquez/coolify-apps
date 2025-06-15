@@ -45,14 +45,14 @@ For more information on how to configure OIDC, please see https://docs.openwebui
 
 ## Use Postgres instead of SQLite
 
-Open WebUI uses SQLite by default... **but**, it can work with Postgres (see https://docs.openwebui.com/getting-started/env-configuration#database-pool)
+Open WebUI uses SQLite by default. However, it is compatible with Postgres (see https://docs.openwebui.com/getting-started/env-configuration#database-pool).
 
 Given that...
 
 - Backups on Coolify are so much easier with Postgres
 - Postgres is _in theory_, more scaleable...
 
-This deployment has been configured to work with Postgres.
+This deployment has been configured to instead use Postgres.
 
 Hence, the `DATABASE_URL` environment variable has been configured like so...
 
