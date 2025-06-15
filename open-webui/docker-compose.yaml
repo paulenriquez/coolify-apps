@@ -69,10 +69,9 @@ services:
       timeout: 30s
       retries: 10
 
-  backup:
+  docker-volume-backup:
     # Lock to v2.43.4 (latest version as of 15-Jun-2025)
     image: offen/docker-volume-backup:v2.43.4
-    container_name: docker-volume-backup
     volumes:
       - open-webui:/backup/open-webui:ro
       - /var/run/docker.sock:/var/run/docker.sock:ro

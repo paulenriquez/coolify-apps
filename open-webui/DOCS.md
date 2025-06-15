@@ -15,11 +15,11 @@ Added two (2) additional services after `open-webui`:
 
 Hence, the following prefixes are used to organize the environment variables (with some exceptions, such as Coolify's `SERVICE_` variables):
 
-| Service      | Prefix you will see in Coolify's UI |
-| ------------ | ----------------------------------- |
-| `open-webui` | `WEBUI_`                            |
-| `postgres`   | `POSTGRES_`                         |
-| `dvb-backup` | `DVB_` (_for Docker Volume Backup_) |
+| Service                | Prefix you will see in Coolify's UI |
+| ---------------------- | ----------------------------------- |
+| `open-webui`           | `WEBUI_`                            |
+| `postgres`             | `POSTGRES_`                         |
+| `docker-volume-backup` | `DVB_` (_for Docker Volume Backup_) |
 
 ## OIDC Authentication
 
@@ -121,7 +121,7 @@ This deployment comes with three functionalities that rely on S3 (listed below).
 
 1. Open WebUI File Uploads (configured under `open-webui` in the compose file)
 2. Postgres Backup (configured via Coolify's UI)
-3. Docker Volume Backups (configured under `backup` in the compose file)
+3. Docker Volume Backups (configured under `docker-volume-backup` in the compose file)
 
 > [!CAUTION]
 >
