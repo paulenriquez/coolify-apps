@@ -6,7 +6,7 @@ A user-friendly, open-source web UI for LLMs.
 
 - **Starting Point:** [Coolify's One-Click Template for Open WebUI](https://github.com/coollabsio/coolify/blob/v4.x/templates/compose/open-webui.yaml) (_as of 16-Jun-2025_)
 
-### Additional Services
+## Additional Services
 
 Added two (2) additional services after `open-webui`:
 
@@ -21,7 +21,7 @@ Hence, the following prefixes are used to organize the environment variables (wi
 | `postgres`   | `POSTGRES_`                         |
 | `dvb-backup` | `DVB_` (_for Docker Volume Backup_) |
 
-### OIDC Authentication
+## OIDC Authentication
 
 This deployment is intended to be used with OIDC authentication.
 
@@ -43,7 +43,7 @@ Additionally, ff. environment variables are exposed to be able to input details 
 
 For more information on how to configure OIDC, please see https://docs.openwebui.com/features/sso#oidc
 
-### Use Postgres instead of SQLite
+## Use Postgres instead of SQLite
 
 Open WebUI uses SQLite by default... **but**, it can work with Postgres (see https://docs.openwebui.com/getting-started/env-configuration#database-pool)
 
@@ -60,7 +60,7 @@ Hence, the `DATABASE_URL` environment variable has been configured like so...
 DATABASE_URL=postgres://${SERVICE_USER_POSTGRES}:${SERVICE_PASSWORD_POSTGRES}@postgres:5432/${POSTGRES_DB:-webui}
 ```
 
-### Use of S3 Storage
+## Use of S3 Storage
 
 Open WebUI can use S3 storage for uploads (see https://docs.openwebui.com/tutorials/s3-storage).
 
@@ -80,7 +80,7 @@ The ff. environment variables are exposed to be able to configure your S3 provid
 
 For more information, see https://docs.openwebui.com/tutorials/s3-storage.
 
-### Added Docker Volume Backup
+## Added Docker Volume Backup
 
 Although Open WebUI can utilize S3 for uploads, it still heavily relies on its Docker Volume to manage its persisted data.
 
@@ -97,7 +97,9 @@ Use the following environment variables to configure Docker Volume Backup:
 | `BACKUP_CRON_EXPRESSION`   | `DVB_CRON_EXP_UTC`         |
 | `BACKUP_RETENTION_DAYS`    | `DVB_RETENTION_DAYS`       |
 
-> [!CAUTION] > **Use a dedicated S3 bucket for Docker Volume Backups**. Don't use an S3 bucket that is being used for other purposes. Docker Volume Backup prunes old backups ("old" is based on `DVB_RETENTION_DAYS`) approach is to scan **all** files within the bucket). If you have any other files in that bucket, it _can_ get deleted.
+> [!CAUTION]
+>
+> **Use a dedicated S3 bucket for Docker Volume Backups**. Don't use an S3 bucket that is being used for other purposes. Docker Volume Backup prunes old backups ("old" is based on `DVB_RETENTION_DAYS`) approach is to scan **all** files within the bucket). If you have any other files in that bucket, it _can_ get deleted.
 
 Additionally, the following values are configured by default:
 
@@ -111,9 +113,9 @@ See https://offen.github.io/docker-volume-backup/ for more information.
 > [!NOTE]
 > Docker Volume Backup uses **UTC Timezone**. Keep that in mind when scheduling backups using the `DVB_CRON_EXP_UTC`.
 
-### How many S3 buckets does this deployment rely on?
+## How many S3 buckets does this deployment rely on?
 
-#### ✅ TLDR: Three (3) S3 Buckets
+### ✅ TLDR: Three (3) S3 Buckets
 
 This deployment comes with three functionalities that rely on S3 (listed below). **⚠️ USE SEPARATE S3 BUCKETS FOR EACH! ⚠️**.
 
