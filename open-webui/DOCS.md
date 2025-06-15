@@ -111,7 +111,7 @@ BACKUP_PRUNING_PREFIX=open-webui-dvb-
 See https://offen.github.io/docker-volume-backup/ for more information.
 
 > [!NOTE]
-> Docker Volume Backup uses **UTC Timezone**. Keep that in mind when scheduling backups using the `DVB_CRON_EXP_UTC`.
+> Docker Volume Backup uses **UTC Timezone**. Keep that in mind when scheduling backups using the `DVB_CRON_EXP_UTC` env var.
 
 ## How many S3 buckets does this deployment rely on?
 
