@@ -88,10 +88,16 @@ This deployment utilizes [offen/docker-volume-backup](https://offen.github.io/do
 
 Use the following environment variables to configure Docker Volume Backup:
 
-| Docker Vol. Backup Env Var | Env Var in Coolify's UI |
-| -------------------------- | ----------------------- |
-| `BACKUP_CRON_EXPRESSION`   | `DVB_CRON_EXP_UTC`      |
-| `BACKUP_RETENTION_DAYS`    | `DVB_RETENTION_DAYS`    |
+| Docker Vol. Backup Env Var | Env Var in Coolify's UI    |
+| -------------------------- | -------------------------- |
+| `AWS_ENDPOINT`             | `DVB_S3_ENDPOINT`          |
+| `AWS_S3_BUCKET_NAME`       | `DVB_S3_BUCKET_NAME`       |
+| `AWS_ACCESS_KEY_ID`        | `DVB_S3_ACCESS_KEY_ID`     |
+| `AWS_SECRET_ACCESS_KEY`    | `DVB_S3_SECRET_ACCESS_KEY` |
+| `BACKUP_CRON_EXPRESSION`   | `DVB_CRON_EXP_UTC`         |
+| `BACKUP_RETENTION_DAYS`    | `DVB_RETENTION_DAYS`       |
+
+> [!CAUTION] > **Use a dedicated S3 bucket for Docker Volume Backups**. Don't use an S3 bucket that is being used for other purposes. Docker Volume Backup prunes old backups ("old" is based on `DVB_RETENTION_DAYS`) approach is to scan **all** files within the bucket). If you have any other files in that bucket, it _can_ get deleted.
 
 Additionally, the following values are configured by default:
 
