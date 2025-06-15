@@ -1,6 +1,6 @@
 services:
   open-webui:
-    image: ghcr.io/open-webui/open-webui:${WEBUI_DOCKER_TAG-main}
+    image: ghcr.io/open-webui/open-webui:main
     depends_on:
       - postgres
     container_name: open-webui
@@ -9,30 +9,30 @@ services:
     expose:
       - "8080"
     environment:
+      - SERVICE_FQDN_OPENWEBUI
+
       - WEBUI_URL=${WEBUI_URL}
-      - WEBUI_SECRET_KEY=${SERVICE_PASSWORD_64_WEBUISECRETKEY}
+      - WEBUI_SECRET_KEY=${SERVICE_PASSWORD_WEBUISECRETKEY}
 
       # Auth (via OIDC)
       - ENABLE_SIGNUP=False
       - ENABLE_LOGIN_FORM=False
       - ENABLE_OAUTH_SIGNUP=True
-      - OAUTH_CLIENT_ID=${OAUTH_CLIENT_ID}
-      - OAUTH_CLIENT_SECRET=${OAUTH_CLIENT_SECRET}
-      - OAUTH_SCOPES=${OAUTH_SCOPES-openid profile email}
-      - OPENID_PROVIDER_URL=${OPENID_PROVIDER_URL}
+      - OAUTH_CLIENT_ID=${WEBUI_OAUTH_CLIENT_ID}
+      - OAUTH_CLIENT_SECRET=${WEBUI_OAUTH_CLIENT_SECRET}
+      - OAUTH_SCOPES=${WEBUI_OAUTH_SCOPES-openid profile email}
+      - OPENID_PROVIDER_URL=${WEBUI_OPENID_PROVIDER_URL}
 
       # Database
       - DATABASE_URL=postgres://${SERVICE_USER_POSTGRES}:${SERVICE_PASSWORD_POSTGRES}@postgres:5432/${POSTGRES_DB:-webui}
 
       # S3 Storage
       - STORAGE_PROVIDER=s3
-      - S3_BUCKET_NAME=${S3_BUCKET_NAME}
-      - S3_ENDPOINT_URL=${S3_ENDPOINT_URL}
-      - S3_SECRET_ACCESS_KEY=${S3_SECRET_ACCESS_KEY}
+      - S3_ENDPOINT_URL=${WEBUI_S3_ENDPOINT_URL}
+      - S3_BUCKET_NAME=${WEBUI_S3_BUCKET_NAME}
+      - S3_ACCESS_KEY_ID=${WEBUI_S3_ACCESS_KEY_ID}
+      - S3_SECRET_ACCESS_KEY=${WEBUI_S3_SECRET_ACCESS_KEY}
 
-      # Persistent Config (see https://docs.openwebui.com/getting-started/env-configuration/#important-note-on-persistentconfig-environment-variables)
-      - ENABLE_PERSISTENT_CONFIG=false
-      - ENABLE_OLLAMA_API=False
     restart: unless-stopped
     healthcheck:
       test:
@@ -66,28 +66,36 @@ services:
           "$POSTGRES_DB",
         ]
       interval: 5s
-      timeout: 20s
+      timeout: 30s
       retries: 10
 
   backup:
-    image: offen/docker-volume-backup:latest
-    container_name: open-webui-backup
+    # Lock to v2.43.4 (latest version as of 15-Jun-2025)
+    image: offen/docker-volume-backup:v2.43.4
+    container_name: docker-volume-backup
     volumes:
       - open-webui:/backup/open-webui:ro
       - /var/run/docker.sock:/var/run/docker.sock:ro
-      - /etc/timezone:/etc/timezone:ro
     environment:
-      - BACKUP_CRON_EXPRESSION=${BACKUP_CRON_EXPRESSION-@daily}
-      - BACKUP_FILENAME=${BACKUP_FILENAME-open-webui-backup-$(date +%Y%m%d%H%M%S).tar.gz}
-      - BACKUP_COMPRESSION=gz
-      - BACKUP_RETENTION_DAYS=${BACKUP_RETENTION_DAYS-7}
-      - AWS_ENDPOINT=${BACKUP_S3_ENDPOINT}
-      - AWS_S3_BUCKET_NAME=${BACKUP_S3_BUCKET}
-      - AWS_ACCESS_KEY_ID=${BACKUP_S3_ACCESS_KEY}
-      - AWS_SECRET_ACCESS_KEY=${BACKUP_S3_SECRET_ACCESS_KEY}
+      - AWS_ENDPOINT=${DVB_S3_ENDPOINT}
+      - AWS_S3_BUCKET_NAME=${DVB_S3_BUCKET_NAME}
+      - AWS_ACCESS_KEY_ID=${DVB_S3_ACCESS_KEY_ID}
+      - AWS_SECRET_ACCESS_KEY=${DVB_S3_SECRET_ACCESS_KEY}
+
+      # Backup Settings
+      - BACKUP_CRON_EXPRESSION=${DVB_CRON_EXP_UTC-@daily}
+      - BACKUP_RETENTION_DAYS=${DVB_RETENTION_DAYS-7}
+      - BACKUP_FILENAME=open-webui-dvb-%Y-%m-%dT%H-%M-%S-UTC.tar.gz
+      - BACKUP_PRUNING_PREFIX=open-webui-dvb-
+
     depends_on:
       - open-webui
     restart: always
+    healthcheck:
+      test: ["CMD-SHELL", "ps aux | grep -q '[/]usr/bin/backup -foreground'"]
+      interval: 5s
+      timeout: 30s
+      retries: 10
 
 volumes:
   open-webui: {}
