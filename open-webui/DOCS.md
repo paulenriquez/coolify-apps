@@ -11,7 +11,7 @@ A user-friendly, open-source web UI for LLMs.
 Added two (2) additional services after `open-webui`:
 
 1. **Postgres (`postgres`)** — To use Postgres instead of the default SQLite database.
-2. **offen/docker-volume-backup (`backup`)** — To be able to backup Open WebUI's docker volume.
+2. **offen/docker-volume-backup (`docker-volume-backup`)** — To be able to backup Open WebUI's docker volume.
 
 Hence, the following prefixes are used to organize the environment variables (with some exceptions, such as Coolify's `SERVICE_` variables):
 
