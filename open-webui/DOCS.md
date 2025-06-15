@@ -99,7 +99,7 @@ Use the following environment variables to configure Docker Volume Backup:
 
 > [!CAUTION]
 >
-> **Use a dedicated S3 bucket for Docker Volume Backups**. Don't use an S3 bucket that is being used for other purposes. Docker Volume Backup prunes old backups ("old" is based on `DVB_RETENTION_DAYS`) approach is to scan **all** files within the bucket). If you have any other files in that bucket, it _can_ get deleted.
+> **Use a dedicated S3 bucket for Docker Volume Backups**. Don't use an S3 bucket that is being used for other purposes. Docker Volume Backup prunes old backups ("old" is based on `DVB_RETENTION_DAYS`) by scanning **all** files within the bucket. If you have any other files in that bucket, it _can_ get deleted.
 
 Additionally, the following values are configured by default:
 
