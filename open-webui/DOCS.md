@@ -6,22 +6,41 @@ A user-friendly, open-source web UI for LLMs.
 
 - **Starting Point:** [Coolify's One-Click Template for Open WebUI](https://github.com/coollabsio/coolify/blob/v4.x/templates/compose/open-webui.yaml) (_as of 16-Jun-2025_)
 
-## Additional Services
+## Services
 
-Added two (2) additional services after `open-webui`:
+This deployment has a total of three (3) services...
 
-1. **Postgres (`postgres`)** — To use Postgres instead of the default SQLite database.
-2. **offen/docker-volume-backup (`docker-volume-backup`)** — To be able to backup Open WebUI's docker volume.
+1. **Open WebUI (`open-webui`)**
+2. **Postgres (`postgres`)** — To use Postgres instead of the default SQLite database.
+3. **offen/docker-volume-backup (`docker-volume-backup`)** — To be able to backup Open WebUI's docker volume.
 
-Hence, the following prefixes are used to organize the environment variables (with some exceptions, such as Coolify's `SERVICE_` variables):
+## S3 Storage
 
-| Service                | Prefix you will see in Coolify's UI |
-| ---------------------- | ----------------------------------- |
-| `open-webui`           | `WEBUI_`                            |
-| `postgres`             | `POSTGRES_`                         |
-| `docker-volume-backup` | `DVB_` (_for Docker Volume Backup_) |
+This deployment contains different functionalities that rely on **separate** S3 buckets.
 
-## OIDC Authentication
+### ❓ Question:
+
+How many S3 buckets does this deployment rely on?
+
+### ✅ TLDR:
+
+Three (3) **separate** S3 Buckets
+
+### Long Answer:
+
+This deployment comes with three functionalities that rely on S3 (listed below). **⚠️ USE SEPARATE S3 BUCKETS FOR EACH! ⚠️**.
+
+1. Open WebUI File Uploads (configured under `open-webui` in the compose file)
+2. Postgres Backup (configured via Coolify's UI)
+3. Docker Volume Backups (configured under `docker-volume-backup` in the compose file)
+
+> [!CAUTION]
+>
+> _For additional emphasis..._ **⚠️ USE SEPARATE S3 BUCKETS FOR EACH! ⚠️** The above listed functionalities use separate, independent S3 clients. The way they upload (and delete) files _can_ conflict with one another. To reduce the risk of your files getting overwritten, it's best to use separate buckets for each.
+
+## Customizations
+
+### OIDC Authentication
 
 This deployment is intended to be used with OIDC authentication.
 
@@ -43,7 +62,7 @@ Additionally, ff. environment variables are exposed to be able to input details 
 
 For more information on how to configure OIDC, please see https://docs.openwebui.com/features/sso#oidc
 
-## Use Postgres instead of SQLite
+### Use Postgres instead of SQLite
 
 Open WebUI uses SQLite by default. However, it is compatible with Postgres (see https://docs.openwebui.com/getting-started/env-configuration#database-pool).
 
@@ -60,14 +79,14 @@ Hence, the `DATABASE_URL` environment variable has been configured like so...
 DATABASE_URL=postgres://${SERVICE_USER_POSTGRES}:${SERVICE_PASSWORD_POSTGRES}@postgres:5432/${POSTGRES_DB:-webui}
 ```
 
-## Use of S3 Storage
+### Use of S3 Storage
 
 Open WebUI can use S3 storage for uploads (see https://docs.openwebui.com/tutorials/s3-storage).
 
 This deployment is designed to utilize this capability.
 
 > [!CAUTION]
-> As of 15-Jun-2025, Open WebUI's website classifies S3 storage feature as **experimental**.
+> As of 15-Jun-2025, Open WebUI's website classifies the S3 storage feature as **experimental**.
 
 The ff. environment variables are exposed to be able to configure your S3 provider.
 
@@ -80,7 +99,7 @@ The ff. environment variables are exposed to be able to configure your S3 provid
 
 For more information, see https://docs.openwebui.com/tutorials/s3-storage.
 
-## Added Docker Volume Backup
+### Added Docker Volume Backup
 
 Although Open WebUI can utilize S3 for uploads, it still heavily relies on its Docker Volume to manage its persisted data.
 
@@ -104,7 +123,7 @@ Use the following environment variables to configure Docker Volume Backup:
 Additionally, the following values are configured by default:
 
 ```yaml
-BACKUP_FILENAME=open-webui-dvb-%Y-%m-%dT%H-%M-%S-UTC.tar.gz
+BACKUP_FILENAME=open-webui-dvb-%Y-%m-%dT%H-%M-%SUTC.tar.gz
 BACKUP_PRUNING_PREFIX=open-webui-dvb-
 ```
 
@@ -112,17 +131,3 @@ See https://offen.github.io/docker-volume-backup/ for more information.
 
 > [!NOTE]
 > Docker Volume Backup uses **UTC Timezone**. Keep that in mind when scheduling backups using the `DVB_CRON_EXP_UTC` env var.
-
-## How many S3 buckets does this deployment rely on?
-
-### ✅ TLDR: Three (3) S3 Buckets
-
-This deployment comes with three functionalities that rely on S3 (listed below). **⚠️ USE SEPARATE S3 BUCKETS FOR EACH! ⚠️**.
-
-1. Open WebUI File Uploads (configured under `open-webui` in the compose file)
-2. Postgres Backup (configured via Coolify's UI)
-3. Docker Volume Backups (configured under `docker-volume-backup` in the compose file)
-
-> [!CAUTION]
->
-> _For additional emphasis..._ **⚠️ USE SEPARATE S3 BUCKETS FOR EACH! ⚠️** The above listed functionalities use separate, independent S3 clients. The way they upload (and delete) files _can_ conflict with one another. To reduce the risk of your files getting overwritten, it's best to use separate buckets for each.
