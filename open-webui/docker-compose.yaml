@@ -6,6 +6,13 @@ services:
     container_name: open-webui
     volumes:
       - open-webui:/app/backend/data
+
+      # ----- For Docker Volume Backup -----
+      # This is the location where a snapshot of the app data
+      # will be created before it is turned into a backup.
+      # See `labels` to see how it's used.
+      - dvb-openwebui:/tmp/dvb-snapshot
+      # ------------------------------------
     expose:
       - "8080"
     environment:
@@ -45,7 +52,17 @@ services:
       retries: 10
 
     labels:
-      - docker-volume-backup.stop-during-backup=true
+      # ----- For Docker Volume Backup -----
+      # When the backup is triggered...
+      # 1. A snapshot of the app data is created in a "temporary" directory (archive-pre)
+      # 2. The backup is created based on that snapshot
+      # 3. Backup is uploaded to S3
+      # 4. The snapshot is deleted (archive-post)
+      #
+      # See https://offen.github.io/docker-volume-backup/how-tos/replace-deprecated-backup-from-snapshot.html
+      - docker-volume-backup.archive-pre=cp -r /app/backend/data /tmp/dvb-snapshot/data
+      - docker-volume-backup.archive-post=rm -rf /tmp/dvb-snapshot/data
+      # ------------------------------------
 
   postgres:
     image: postgres:17-alpine
@@ -73,8 +90,14 @@ services:
   docker-volume-backup:
     # Lock to v2.43.4 (latest version as of 15-Jun-2025)
     image: offen/docker-volume-backup:v2.43.4
+    depends_on:
+      - open-webui
     volumes:
-      - open-webui:/backup/open-webui:ro
+      # ----- For Docker Volume Backup -----
+      # Creates the backup based on the "temporary" directory.
+      # See `labels` of "open-webui"
+      - dvb-openwebui:/backup/open-webui:ro
+      # ------------------------------------
       - /var/run/docker.sock:/var/run/docker.sock:ro
     environment:
       - AWS_ENDPOINT=${DVB_S3_ENDPOINT}
@@ -85,7 +108,8 @@ services:
       # Backup Settings
       - BACKUP_CRON_EXPRESSION=${DVB_CRON_EXP_UTC-@daily}
       - BACKUP_RETENTION_DAYS=${DVB_RETENTION_DAYS-7}
-      - BACKUP_FILENAME=open-webui-dvb-%Y-%m-%dT%H-%M-%SUTC.tar.gz
+      - BACKUP_COMPRESSION=gz
+      - BACKUP_FILENAME=open-webui-dvb-%Y-%m-%dT%H-%M-%SZ.{{ .Extension }}
       - BACKUP_PRUNING_PREFIX=open-webui-dvb-
 
     restart: always
@@ -97,3 +121,4 @@ services:
 
 volumes:
   open-webui: {}
+  dvb-openwebui: {}
