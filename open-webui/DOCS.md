@@ -124,11 +124,12 @@ See https://offen.github.io/docker-volume-backup/ for more information.
 
 ### Open WebUI Defaults
 
-The environment variables are set-up with the following defaults — based on my personal use case for Open WebUI.
+Some of Open WebUI's config are set-up with the following defaults:
 
 ```yaml
 ENABLE_OLLAMA_API=False
 DEFAULT_USER_ROLE=user
 ENABLE_CODE_EXECUTION=False
 ENABLE_CODE_INTERPRETER=False
+ENABLE_TAGS_GENERATION=False
 ```
