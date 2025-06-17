@@ -16,19 +16,9 @@ This deployment has a total of three (3) services...
 
 ## S3 Storage
 
-This deployment contains different functionalities that rely on **separate** S3 buckets.
+You'll need **three (3), separate** S3 buckets for this deployment.
 
-### ❓ Question:
-
-How many S3 buckets does this deployment rely on?
-
-### ✅ TLDR:
-
-Three (3) **separate** S3 Buckets
-
-### Long Answer:
-
-This deployment comes with three functionalities that rely on S3 (listed below). **⚠️ USE SEPARATE S3 BUCKETS FOR EACH! ⚠️**.
+It is important that you **⚠️ USE SEPARATE S3 BUCKETS FOR EACH! ⚠️**.
 
 1. Open WebUI File Uploads (configured under `open-webui` in the compose file)
 2. Postgres Backup (configured via Coolify's UI)
