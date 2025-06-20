@@ -8,11 +8,12 @@ A user-friendly, open-source web UI for LLMs.
 
 ## Services
 
-This deployment has a total of three (3) services...
+This deployment has a total of four (4) services...
 
 1. **Open WebUI (`open-webui`)**
 2. **Postgres (`postgres`)** — To use Postgres instead of the default SQLite database.
 3. **offen/docker-volume-backup (`docker-volume-backup`)** — To be able to backup Open WebUI's docker volume.
+4. **Docling (`docling`)** — [Docling](https://docling-project.github.io/docling/) is used as the document extraction engine.
 
 ## S3 Storage
 
@@ -52,6 +53,8 @@ Additionally, ff. environment variables are exposed to be able to input details 
 
 For more information on how to configure OIDC, please see https://docs.openwebui.com/features/sso#oidc
 
+---
+
 ### Use Postgres instead of SQLite
 
 Open WebUI uses SQLite by default. However, it is compatible with Postgres (see https://docs.openwebui.com/getting-started/env-configuration#database-pool).
@@ -68,6 +71,8 @@ Hence, the `DATABASE_URL` environment variable has been configured like so...
 ```yaml
 DATABASE_URL=postgres://${SERVICE_USER_POSTGRES}:${SERVICE_PASSWORD_POSTGRES}@postgres:5432/${POSTGRES_DB:-webui}
 ```
+
+---
 
 ### Use of S3 Storage
 
@@ -88,6 +93,8 @@ The ff. environment variables are exposed to be able to configure your S3 provid
 | `S3_SECRET_ACCESS_KEY` | `WEBUI_S3_SECRET_ACCESS_KEY` |
 
 For more information, see https://docs.openwebui.com/tutorials/s3-storage.
+
+---
 
 ### Added Docker Volume Backup
 
@@ -121,6 +128,33 @@ See https://offen.github.io/docker-volume-backup/ for more information.
 
 > [!NOTE]
 > Docker Volume Backup uses **UTC Timezone**. Keep that in mind when scheduling backups using the `DVB_CRON_EXP_UTC` env var.
+
+---
+
+### Docling
+
+This deployment includes [Docling](https://docling-project.github.io/docling/) (_more specifically_ [Docling Serve](https://github.com/docling-project/docling-serve)) which will be used as Open WebUI's Document Extraction Engine.
+
+Docling is configured to run on Port 25001.
+
+As such, the following environment variables under `open-webui` has been configured like so:
+
+```yaml
+CONTENT_EXTRACTION_ENGINE=docling
+DOCLING_SERVER_URL=http://docling:25001
+```
+
+#### Docling Serve UI
+
+Docling Serve has a bundled UI available at the `/ui` endpoint.
+
+This deployment enables this feature through the `DOCLING_SERVE_ENABLE_UI=true` environment variable under the `docling` service.
+
+To make this accessible via SSH Local Port Forwarding, the Docling Serve container is bound to `127.0.0.1` (see "ports" section of the `docling` service.)
+
+Hence, by running `ssh -L 25001:localhost:25001 <USERNAME>@<YOUR_SERVER_ADDRESS>`, you'll be able to access this UI on your device at http://localhost:5001/ui.
+
+---
 
 ### Open WebUI Defaults
 
