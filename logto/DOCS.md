@@ -6,7 +6,7 @@ Logto is the modern, open-source auth infrastructure for SaaS and AI apps.
 
 - **Starting Point:** [Coolify's One-Click Template for Logto](https://github.com/coollabsio/coolify/blob/v4.x/templates/compose/logto.yaml) (_as of 27-May-2025_)
 
-### Prevent Admin UI _"Unauthorized. Please check credentials and its scope"_ Error
+### Prevent Admin Console _"Unauthorized. Please check credentials and its scope"_ Error
 
 Logto does not work out-of-the-box when deployed to Coolify. Although you'll be able to create the first account, you'll come to find that performing any action within the Admin UI will result in **"Unauthorized. Please check credentials and its scope"** error.
 
@@ -40,3 +40,15 @@ Instead of using `extra_hosts`, it uses an expanded `entrypoint` script which do
 ### Use `postgres:17-alpine` instead of `postgres:14-alpine`
 
 Coolify's one-click compose file (**Starting Point**) uses Postgres 14, while Logto's uses 17. Might be better to just use the more recent version.
+
+### Admin Console made inaccessible from the public internet
+
+Logto's Admin Console (_runs on port 3002 by default, but this deployment changed it to **port 23002**_) has been bound to `localhost`, preventing it from being accessed through the public internet.
+
+The intent is to make it accessible via SSH Local Port Forwarding only — thus ensuring that only authorized users are actually the only ones able to access the console.
+
+To access the Logto Admin Console, run the following on your device:
+
+```bash
+ssh -L 23002:localhost:23002 <USERNAME>@<YOUR_SERVER_ADDRESS>
+```

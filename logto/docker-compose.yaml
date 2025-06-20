@@ -5,15 +5,20 @@ services:
     depends_on:
       postgres:
         condition: service_healthy
-    expose:
-      - "3001"
-      - "3002" # Admin Console
     environment:
       - SERVICE_FQDN_LOGTO
       - TRUST_PROXY_HEADER=1
       - DB_URL=postgres://${SERVICE_USER_POSTGRES}:${SERVICE_PASSWORD_POSTGRES}@postgres:5432/${POSTGRES_DB:-logto}
       - ENDPOINT=${LOGTO_ENDPOINT}
-      - ADMIN_ENDPOINT=${LOGTO_ADMIN_ENDPOINT}
+
+      # Admin Console
+      - ADMIN_PORT=23002
+      - ADMIN_ENDPOINT=${LOGTO_ADMIN_ENDPOINT-http://localhost:23002}
+    ports:
+      - "127.0.0.1:23002:23002"
+    expose:
+      - "3001"
+      - "23002" # Admin Console
     entrypoint:
       - sh
       - "-c"

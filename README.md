@@ -64,6 +64,7 @@ To prevent port conflicts — these containers are configured to run on port ser
 
 The list below keeps track of all containers configured to directly bind with `localhost`, as well as the associated port:
 
-| Application                                    |  Service  |  Port   |
-| ---------------------------------------------- | :-------: | :-----: |
-| [open-webui](./open-webui/docker-compose.yaml) | `docling` | `25001` |
+| Application                                    | Service                 |  Port   |
+| ---------------------------------------------- | ----------------------- | :-----: |
+| [Logto](./logto/docker-compose.yaml)           | `logto` (Admin Console) | `23002` |
+| [Open WebUI](./open-webui/docker-compose.yaml) | `docling`               | `25001` |
