@@ -53,3 +53,17 @@ The `DOCS.example.md` file is a template for how each App Directory's `DOCS.md` 
 | Logto                     |           [docker-compose.yaml](./logto/docker-compose.yaml)           |           [DOCS.md](./logto/DOCS.md)           |
 | MorbZ/docker-web-redirect | [docker-compose.yaml](./morbz-docker-web-redirect/docker-compose.yaml) | [DOCS.md](./morbz-docker-web-redirect/DOCS.md) |
 | Open WebUI                |        [docker-compose.yaml](./open-webui/docker-compose.yaml)         |        [DOCS.md](./open-webui/DOCS.md)         |
+
+## 🔗 Localhost Port Mappings
+
+Some of the applications are configured to bind directly to `localhost` (or `127.0.0.1`).
+
+These are typically admin panels or internal UIs that aren't intended to be exposed to the public internet. Instead, they are to be accessed through SSH Local Port Forwarding.
+
+To prevent port conflicts — these containers are configured to run on port series 2XXXX.
+
+The list below keeps track of all containers configured to directly bind with `localhost`, as well as the associated port:
+
+| Application                                    |  Service  |  Port   |
+| ---------------------------------------------- | :-------: | :-----: |
+| [open-webui](./open-webui/docker-compose.yaml) | `docling` | `25001` |
