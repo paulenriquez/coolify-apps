@@ -120,7 +120,7 @@ Use the following environment variables to configure Docker Volume Backup:
 Additionally, the following values are configured by default:
 
 ```yaml
-BACKUP_FILENAME=open-webui-dvb-%Y-%m-%dT%H-%M-%SUTC.tar.gz
+BACKUP_FILENAME=open-webui-dvb-%Y-%m-%dT%H-%M-%SZ.tar.gz
 BACKUP_PRUNING_PREFIX=open-webui-dvb-
 ```
 
@@ -152,7 +152,19 @@ This deployment enables this feature through the `DOCLING_SERVE_ENABLE_UI=true` 
 
 To make this accessible via SSH Local Port Forwarding, the Docling Serve container is bound to `127.0.0.1` (see "ports" section of the `docling` service.)
 
-Hence, by running `ssh -L 25001:localhost:25001 <USERNAME>@<YOUR_SERVER_ADDRESS>`, you'll be able to access this UI on your device at http://localhost:5001/ui.
+Hence, by running `ssh -L 25001:localhost:25001 <USERNAME>@<YOUR_SERVER_ADDRESS>`, you'll be able to access this UI on your device at http://localhost:25001/ui.
+
+---
+
+### Web Search
+
+Open WebUI works with DuckDuckGo out of the box. For ease of set-up, this has been configured as the default search engine of this Open WebUI deployment.
+
+#### For more advanced use-cases...
+
+I _highly_ recommend [Tavily](https://www.tavily.com/) — both for _Web Search_ and _Web Loader_.
+
+They have a generous free tier, and have reasonable pay-as-you-go pricing.
 
 ---
 

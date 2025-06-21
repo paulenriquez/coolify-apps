@@ -45,6 +45,10 @@ services:
       - CONTENT_EXTRACTION_ENGINE=docling
       - DOCLING_SERVER_URL=http://docling:25001
 
+      # Web Search
+      - ENABLE_WEB_SEARCH=True
+      - WEB_SEARCH_ENGINE=duckduckgo
+
       # Defaults
       - ENABLE_OLLAMA_API=False
       - DEFAULT_USER_ROLE=user
