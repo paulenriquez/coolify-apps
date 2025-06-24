@@ -49,6 +49,9 @@ services:
       - ENABLE_WEB_SEARCH=True
       - WEB_SEARCH_ENGINE=duckduckgo
 
+      # Timezone
+      - TZ=UTC
+
       # Defaults
       - ENABLE_OLLAMA_API=False
       - DEFAULT_USER_ROLE=user

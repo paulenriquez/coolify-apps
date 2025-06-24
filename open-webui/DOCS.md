@@ -168,6 +168,14 @@ They have a generous free tier, and have reasonable pay-as-you-go pricing.
 
 ---
 
+### Timezone
+
+Open WebUI can inject the system time in system prompts.
+
+To ensure consistency, the `open-webui` service has explicitly been passed the `TZ=UTC` environment variable.
+
+---
+
 ### Open WebUI Defaults
 
 Some of Open WebUI's config are set-up with the following defaults:
