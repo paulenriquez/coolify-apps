@@ -44,12 +44,13 @@ ENABLE_OAUTH_SIGNUP=False
 
 Additionally, ff. environment variables are exposed to be able to input details of the OIDC provider.
 
-| Open WebUI Env Var    | Env Var in Coolify's UI     |
-| --------------------- | --------------------------- |
-| `OAUTH_CLIENT_ID`     | `WEBUI_OAUTH_CLIENT_ID`     |
-| `OAUTH_CLIENT_SECRET` | `WEBUI_OAUTH_CLIENT_SECRET` |
-| `OPENID_PROVIDER_URL` | `WEBUI_OPENID_PROVIDER_URL` |
-| `OAUTH_SCOPES`        | `WEBUI_OAUTH_SCOPES `       |
+| Open WebUI Env Var                | Env Var in Coolify's UI           |
+| --------------------------------- | --------------------------------- |
+| `OAUTH_CLIENT_ID`                 | `WEBUI_OAUTH_CLIENT_ID`           |
+| `OAUTH_CLIENT_SECRET`             | `WEBUI_OAUTH_CLIENT_SECRET`       |
+| `OPENID_PROVIDER_URL`             | `WEBUI_OPENID_PROVIDER_URL`       |
+| `OAUTH_SCOPES`                    | `WEBUI_OAUTH_SCOPES `             |
+| `WEBUI_AUTH_SIGNOUT_REDIRECT_URL` | `WEBUI_AUTH_SIGNOUT_REDIRECT_URL` |
 
 For more information on how to configure OIDC, please see https://docs.openwebui.com/features/sso#oidc
 
