@@ -59,6 +59,10 @@ services:
 
         echo "------------------------------------------------------------"
 
+        # Run DB alteration if necessary.
+        # Version should match the Logto instance.
+        npx @logto/cli db alteration deploy 1.29.0
+
         # Run the logto entrypoint command
         npm run cli db seed -- --swe && npm start
     healthcheck:
