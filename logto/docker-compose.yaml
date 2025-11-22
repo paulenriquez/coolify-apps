@@ -1,6 +1,6 @@
 services:
   logto:
-    image: svhd/logto:1.29
+    image: svhd/logto:1.33
     container_name: logto
     depends_on:
       postgres:
