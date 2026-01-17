@@ -1,6 +1,6 @@
 services:
   logto:
-    image: svhd/logto:1.33
+    image: svhd/logto:1.35
     container_name: logto
     depends_on:
       postgres:
@@ -61,7 +61,7 @@ services:
 
         # Run DB alteration if necessary.
         # Version should match the Logto instance.
-        npx @logto/cli db alteration deploy 1.33.0
+        npx @logto/cli db alteration deploy 1.35.0
 
         # Run the logto entrypoint command
         npm run cli db seed -- --swe && npm start
