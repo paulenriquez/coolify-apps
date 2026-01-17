@@ -42,7 +42,7 @@ ENABLE_SIGNUP=False
 ENABLE_OAUTH_SIGNUP=False
 ```
 
-Additionally, ff. environment variables are exposed to be able to input details of the OIDC provider.
+Additionally, the ff. environment variables are exposed to be able to input details of the OIDC provider.
 
 | Open WebUI Env Var                | Env Var in Coolify's UI           |
 | --------------------------------- | --------------------------------- |
@@ -53,6 +53,12 @@ Additionally, ff. environment variables are exposed to be able to input details 
 | `WEBUI_AUTH_SIGNOUT_REDIRECT_URL` | `WEBUI_AUTH_SIGNOUT_REDIRECT_URL` |
 
 For more information on how to configure OIDC, please see https://docs.openwebui.com/features/sso#oidc
+
+Finally, to explicitly set JWT expiration within 14 days, the `JWT_EXPIRES_IN` environment variable has been configured like so...
+
+```yaml
+JWT_EXPIRES_IN=14d
+```
 
 ---
 
