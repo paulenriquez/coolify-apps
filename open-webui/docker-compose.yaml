@@ -45,6 +45,16 @@ services:
       # Docling
       - CONTENT_EXTRACTION_ENGINE=docling
       - DOCLING_SERVER_URL=http://docling:25001
+      - |
+        DOCLING_PARAMS=
+          {
+            "do_ocr": true,
+            "ocr_engine": "tesseract",
+            "ocr_lang": ["eng", "fra", "deu", "spa"],
+            "force_ocr": false,
+            "pdf_backend": "pypdfium2",
+            "table_mode": "accurate"
+          }
 
       # Web Search
       - ENABLE_WEB_SEARCH=True
