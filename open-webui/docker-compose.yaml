@@ -154,10 +154,14 @@ services:
       retries: 10
 
   docling:
-    image: ghcr.io/docling-project/docling-serve-cpu:v0.11.0
+    image: ghcr.io/docling-project/docling-serve-cpu:v1.10.0
     environment:
-      - UVICORN_PORT=25001
       - DOCLING_SERVE_ENABLE_UI=true
+      - DOCLING_SERVE_MAX_SYNC_WAIT=600
+      - DOCLING_SERVE_ENG_LOC_NUM_WORKERS=2
+      - OMP_NUM_THREADS=4
+      - UVICORN_PORT=25001
+      - UVICORN_WORKERS=1
     ports:
       - "127.0.0.1:25001:25001"
     healthcheck:
