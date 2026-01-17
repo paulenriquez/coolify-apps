@@ -31,6 +31,8 @@ services:
       - OAUTH_SCOPES=${WEBUI_OAUTH_SCOPES-openid profile email}
       - OPENID_PROVIDER_URL=${WEBUI_OPENID_PROVIDER_URL}
       - WEBUI_AUTH_SIGNOUT_REDIRECT_URL=${WEBUI_AUTH_SIGNOUT_REDIRECT_URL}
+
+      # JWT Expiry
       - JWT_EXPIRES_IN=14d
 
       # Database
