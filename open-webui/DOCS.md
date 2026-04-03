@@ -39,8 +39,9 @@ The ff. environment variables are configured accordingly:
 
 ```yaml
 ENABLE_SIGNUP=False
-ENABLE_OAUTH_SIGNUP=False
 ENABLE_OAUTH_PERSISTENT_CONFIG=False
+ENABLE_OAUTH_SIGNUP=False
+OAUTH_AUTHORIZE_PARAMS={"prompt":"login consent"}
 ```
 
 Additionally, the ff. environment variables are exposed to be able to input details of the OIDC provider.
@@ -54,12 +55,6 @@ Additionally, the ff. environment variables are exposed to be able to input deta
 | `WEBUI_AUTH_SIGNOUT_REDIRECT_URL` | `WEBUI_AUTH_SIGNOUT_REDIRECT_URL` |
 
 For more information on how to configure OIDC, please see https://docs.openwebui.com/features/sso#oidc
-
-Finally, to explicitly set JWT expiration within 14 days, the `JWT_EXPIRES_IN` environment variable has been configured like so...
-
-```yaml
-JWT_EXPIRES_IN=14d
-```
 
 ---
 
