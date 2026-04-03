@@ -40,6 +40,7 @@ The ff. environment variables are configured accordingly:
 ```yaml
 ENABLE_SIGNUP=False
 ENABLE_OAUTH_SIGNUP=False
+ENABLE_OAUTH_PERSISTENT_CONFIG=False
 ```
 
 Additionally, the ff. environment variables are exposed to be able to input details of the OIDC provider.
